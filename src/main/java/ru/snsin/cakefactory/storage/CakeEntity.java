@@ -3,12 +3,13 @@ package ru.snsin.cakefactory.storage;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 public class CakeEntity implements Serializable {
     private String id;
     private String name;
-    private String price;
+    private BigDecimal price;
 
     public void setId(String id) {
         this.id = id;
@@ -27,11 +28,11 @@ public class CakeEntity implements Serializable {
         this.name = name;
     }
 
-    public String getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }

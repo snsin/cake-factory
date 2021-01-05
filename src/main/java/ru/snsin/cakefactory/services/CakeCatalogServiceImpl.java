@@ -26,6 +26,6 @@ public class CakeCatalogServiceImpl implements CakeCatalogService {
     }
 
     private  CakeItem cakeItemFromCakeEntity(CakeEntity entity) {
-        return new CakeItem(entity.getName(), new BigDecimal(entity.getPrice()));
+        return new CakeItem(entity.getName(), entity.getPrice());
     }
 }
