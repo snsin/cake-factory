@@ -62,7 +62,7 @@ class CatalogControllerTest {
     @Test
     void shouldDisplayPriceInPounds() throws IOException {
         List<CakeItem> redVelvetList =
-                Collections.singletonList(new CakeItem("Red Velvet", new BigDecimal("3.95")));
+                Collections.singletonList(new CakeItem("Red Velvet", new BigDecimal("3.90")));
 
         Mockito.when(cakeCatalog.getAll()).thenReturn(redVelvetList);
         final HtmlPage page = mvc.getPage("/");
@@ -71,6 +71,6 @@ class CatalogControllerTest {
         final String redVelvetPrice = redVelvetCard.querySelector("h5").getVisibleText();
 
         assertEquals("Red Velvet", redVelvetTitle);
-        assertEquals("£3.95", redVelvetPrice);
+        assertEquals("£3.90", redVelvetPrice);
     }
 }
