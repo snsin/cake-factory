@@ -1,8 +1,11 @@
 package ru.snsin.cakefactory.services;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ru.snsin.cakefactory.domain.CakeItem;
+import ru.snsin.cakefactory.storage.CakeRepository;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -16,7 +19,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DataJpaTest
 class CakeCatalogServiceImplTest {
 
-    private final CakeCatalogService cakeCatalog = new CakeCatalogServiceImpl();
+    @Autowired
+    private CakeRepository cakeRepository;
+
+    private CakeCatalogService cakeCatalog;
+
+    @BeforeEach
+    void setUp() {
+        cakeCatalog = new CakeCatalogServiceImpl(cakeRepository);
+    }
+
 
     @Test
     void shouldGetAllCakeItems() {
