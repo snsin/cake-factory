@@ -1,11 +1,9 @@
-package ru.snsin.cakefactory.services;
+package ru.snsin.cakefactory.storage;
 
 import org.springframework.stereotype.Service;
 import ru.snsin.cakefactory.domain.CakeItem;
-import ru.snsin.cakefactory.storage.CakeEntity;
-import ru.snsin.cakefactory.storage.CakeRepository;
+import ru.snsin.cakefactory.services.CakeCatalogService;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,12 +18,7 @@ public class CakeCatalogServiceImpl implements CakeCatalogService {
     @Override
     public List<CakeItem> getAll() {
         return cakeRepository.findAll().stream()
-                .map(this::cakeItemFromCakeEntity)
+                .map(entity -> new CakeItem(entity.getName(), entity.getPrice()))
                 .collect(Collectors.toUnmodifiableList());
-//        return Collections.emptyList();
-    }
-
-    private  CakeItem cakeItemFromCakeEntity(CakeEntity entity) {
-        return new CakeItem(entity.getName(), entity.getPrice());
     }
 }
