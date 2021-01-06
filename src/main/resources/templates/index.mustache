@@ -108,6 +108,10 @@
                     <a href="#">{{name}}</a>
                 </h4>
                 <h5>£{{price}}</h5>
+                <form action="/basket" method="post">
+                  <input hidden name="cakeName" value="{{name}}">
+                  <input class="btn-primary" type="submit" value="Add">
+                </form>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
               </div>
               <div class="card-footer">
