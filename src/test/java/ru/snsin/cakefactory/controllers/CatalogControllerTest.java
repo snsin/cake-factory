@@ -3,6 +3,7 @@ package ru.snsin.cakefactory.controllers;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomNode;
+import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -72,5 +73,14 @@ class CatalogControllerTest {
 
         assertEquals("Red Velvet", redVelvetTitle);
         assertEquals("£3.90", redVelvetPrice);
+    }
+
+    @Test
+    void shouldDisplayBasketLink() throws IOException {
+        Mockito.when(cakeCatalog.getAll()).thenReturn(Collections.emptyList());
+        final HtmlPage page = mvc.getPage("/");
+        final DomNodeList<DomNode> navigations =
+                page.querySelectorAll("li.nav-item > a.nav-link");
+        assertTrue(navigations.stream().anyMatch(link -> link.asText().contains("Basket")));
     }
 }
