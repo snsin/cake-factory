@@ -5,11 +5,15 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
 import ru.snsin.cakefactory.domain.CakeItem;
 import ru.snsin.cakefactory.services.CakeCatalogService;
 
@@ -27,14 +31,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CatalogControllerTest {
 
     @Autowired
-    WebClient mvc;
+    WebClient webClient;
+
+    @Autowired
+    MockMvc mockMvc;
 
     @MockBean
     CakeCatalogService cakeCatalog;
 
     @Test
     void shouldReturnIndex() throws Exception {
-        final Page page = mvc.getPage("/");
+        final Page page = webClient.getPage("/");
         assertTrue(page.isHtmlPage());
     }
 
@@ -49,7 +56,7 @@ class CatalogControllerTest {
                 .map(CakeItem::getName).collect(Collectors.toList());
 
         Mockito.when(cakeCatalog.getAll()).thenReturn(items);
-        final HtmlPage page = mvc.getPage("/");
+        final HtmlPage page = webClient.getPage("/");
         final List<String> titles = page.querySelectorAll("div.card").stream()
                 .map(card -> card.querySelector("h4.card-title").getVisibleText())
                 .collect(Collectors.toList());
@@ -66,7 +73,7 @@ class CatalogControllerTest {
                 Collections.singletonList(new CakeItem("Red Velvet", new BigDecimal("3.90")));
 
         Mockito.when(cakeCatalog.getAll()).thenReturn(redVelvetList);
-        final HtmlPage page = mvc.getPage("/");
+        final HtmlPage page = webClient.getPage("/");
         final DomNode redVelvetCard = page.querySelector("div.card");
         final String redVelvetTitle = redVelvetCard.querySelector("h4.card-title").getVisibleText();
         final String redVelvetPrice = redVelvetCard.querySelector("h5").getVisibleText();
@@ -78,9 +85,21 @@ class CatalogControllerTest {
     @Test
     void shouldDisplayBasketLink() throws IOException {
         Mockito.when(cakeCatalog.getAll()).thenReturn(Collections.emptyList());
-        final HtmlPage page = mvc.getPage("/");
+        final HtmlPage page = webClient.getPage("/");
         final DomNodeList<DomNode> navigations =
                 page.querySelectorAll("li.nav-item > a.nav-link");
         assertTrue(navigations.stream().anyMatch(link -> link.asText().contains("Basket")));
+    }
+
+    @Test
+    void shouldDisplayAddButtonOnItem() throws IOException {
+        CakeItem expectedItem = new CakeItem("Victoria Sponge", new BigDecimal("5.45"));
+
+        Mockito.when(cakeCatalog.getAll()).thenReturn(Collections.singletonList(expectedItem));
+
+        final HtmlPage page = webClient.getPage("/");
+        final HtmlSubmitInput addButton = page.querySelector("div.card form input[type=submit]");
+        assertTrue(addButton.asText().contains("Add"));
+
     }
 }
