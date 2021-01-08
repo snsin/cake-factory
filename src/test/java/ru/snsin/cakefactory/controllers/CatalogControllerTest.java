@@ -6,15 +6,14 @@ import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
 import ru.snsin.cakefactory.domain.CakeItem;
+import ru.snsin.cakefactory.services.BasketService;
 import ru.snsin.cakefactory.services.CakeCatalogService;
 
 import java.io.IOException;
@@ -38,6 +37,9 @@ class CatalogControllerTest {
 
     @MockBean
     CakeCatalogService cakeCatalog;
+
+    @MockBean
+    BasketService basketService;
 
     @Test
     void shouldReturnIndex() throws Exception {
@@ -83,12 +85,23 @@ class CatalogControllerTest {
     }
 
     @Test
-    void shouldDisplayBasketLink() throws IOException {
-        Mockito.when(cakeCatalog.getAll()).thenReturn(Collections.emptyList());
+    void shouldDisplayEmptyBasket() throws IOException {
         final HtmlPage page = webClient.getPage("/");
         final DomNodeList<DomNode> navigations =
                 page.querySelectorAll("li.nav-item > a.nav-link");
-        assertTrue(navigations.stream().anyMatch(link -> link.asText().contains("Basket")));
+        assertTrue(navigations.stream().anyMatch(link -> link.asText().contains("Basket: 0 item(s)")));
+    }
+
+    @Test
+    void shouldDisplayItemsInBasket() throws IOException {
+        int expectedItemsCount = 2;
+        String expectedBasketContent = String.format("Basket: %d item(s)", expectedItemsCount);
+        Mockito.when(basketService.countItems()).thenReturn(expectedItemsCount);
+        final HtmlPage page = webClient.getPage("/");
+        final DomNodeList<DomNode> navigations =
+                page.querySelectorAll("li.nav-item > a.nav-link");
+        assertTrue(navigations.stream()
+                .anyMatch(link -> link.asText().contains(expectedBasketContent)));
     }
 
     @Test
