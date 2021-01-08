@@ -2,10 +2,7 @@ package ru.snsin.cakefactory.controllers;
 
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.DomNode;
-import com.gargoylesoftware.htmlunit.html.DomNodeList;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
+import com.gargoylesoftware.htmlunit.html.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +18,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @WebMvcTest(CatalogController.class)
 class CatalogControllerTest {
@@ -100,8 +97,13 @@ class CatalogControllerTest {
         final HtmlPage page = webClient.getPage("/");
         final DomNodeList<DomNode> navigations =
                 page.querySelectorAll("li.nav-item > a.nav-link");
-        assertTrue(navigations.stream()
-                .anyMatch(link -> link.asText().contains(expectedBasketContent)));
+
+        final Optional<DomNode> domNodeOptional = navigations.stream()
+                .filter(link -> link.asText().contains(expectedBasketContent))
+                .findAny();
+        assertTrue(domNodeOptional.isPresent());
+        HtmlAnchor basketLink = (HtmlAnchor) domNodeOptional.get();
+        assertEquals("/basket", basketLink.getHrefAttribute());
     }
 
     @Test

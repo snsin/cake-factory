@@ -25,6 +25,7 @@ public class CatalogController {
         Map<String, Object> cakesModel = new HashMap<>();
         cakesModel.put("cakes", catalogService.getAll());
         cakesModel.put("basketItemsCount", basketService.countItems());
+        cakesModel.put("home?", true);
         return new ModelAndView("index", cakesModel);
     }
 }
