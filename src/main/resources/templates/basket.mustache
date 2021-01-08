@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{> head-partial}}
+
+<body>
+
+  <!-- Navigation -->
+  {{> navbar-partial}}
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+     {{> categories-partial}}
+
+      <div class="col-lg-9">
+        <div class="row mt-4">
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Quantity</th>
+              </tr>
+              </thead>
+              <tbody>
+              {{#basketItems}}
+              <tr>
+                <th scope="row">{{name}}</th>
+                <td>x{{count}}</td>
+              </tr>
+              {{/basketItems}}
+              </tbody>
+            </table>
+          {{^basketItems}}
+            <p class="text-center">Your basket is empty. Add some items from catalog</p>
+          {{/basketItems}}
+
+        </div>
+        <!-- /.row -->
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  {{> footer-scripts-partial}}
+
+</body>
+
+</html>
