@@ -1,7 +1,6 @@
 package ru.snsin.cakefactory.services;
 
 import org.springframework.stereotype.Service;
-import ru.snsin.cakefactory.domain.CakeItem;
 
 @Service
 public class BasketServiceImpl implements BasketService {
@@ -14,7 +13,7 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public void addItem(CakeItem cakeItem) {
+    public void addItem(String cakeName) {
         items += 1;
 
     }

@@ -2,11 +2,8 @@ package ru.snsin.cakefactory.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.snsin.cakefactory.domain.CakeItem;
 
-import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BasketServiceImplTest {
 
@@ -19,10 +16,10 @@ class BasketServiceImplTest {
 
     @Test
     void shouldIncreaseItemsCountOnAdd() {
-        final CakeItem addingItem = new CakeItem("All Butter Croissant", new BigDecimal("0.75"));
-        basketService.addItem(addingItem);
+        final String cakeName = "All Butter Croissant";
+        basketService.addItem(cakeName);
         assertEquals(1, basketService.countItems());
-        basketService.addItem(addingItem);
+        basketService.addItem(cakeName);
         assertEquals(2, basketService.countItems());
     }
 }
