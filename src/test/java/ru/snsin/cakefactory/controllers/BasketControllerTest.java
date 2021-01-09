@@ -75,4 +75,19 @@ class BasketControllerTest {
         assertTrue(croissantRow.asText().contains("x1"));
 
     }
+
+    @Test
+    void shouldRenderRemoveButton() throws IOException {
+        final String baguette = "Fresh Baguette";
+        final BasketItem expectedItem = new BasketItem(baguette, 2);
+
+        Mockito.when(basketService.getNameCountPairs())
+                .thenReturn(Collections.singletonList(expectedItem));
+
+        final HtmlPage page = webClient.getPage("/basket");
+        final HtmlSubmitInput removeButton =
+                page.querySelector("tbody tr form input[type=submit]");
+        assertTrue(removeButton.asText().contains("Remove"));
+
+    }
 }
