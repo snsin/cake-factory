@@ -41,4 +41,15 @@ public class BasketServiceImpl implements BasketService {
                 .map(nameCount -> new BasketItem(nameCount.getKey(), nameCount.getValue()))
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    @Override
+    public void removeItem(String cakeName) {
+        for (Iterator<CakeItem> i = items.iterator(); i.hasNext();) {
+            CakeItem currentItem = i.next();
+            if (currentItem.getName().equals(cakeName)) {
+                i.remove();
+                return;
+            }
+        }
+    }
 }

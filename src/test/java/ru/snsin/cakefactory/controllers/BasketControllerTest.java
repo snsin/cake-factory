@@ -16,8 +16,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -88,6 +87,6 @@ class BasketControllerTest {
         final HtmlSubmitInput removeButton =
                 page.querySelector("tbody tr form input[type=submit]");
         assertTrue(removeButton.asText().contains("Remove"));
-
+        assertDoesNotThrow(() -> removeButton.click());
     }
 }

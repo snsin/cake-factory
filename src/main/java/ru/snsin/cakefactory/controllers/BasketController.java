@@ -43,4 +43,10 @@ public class BasketController {
         basketModel.put("basketItems", basketService.getNameCountPairs());
         return new ModelAndView("basket", basketModel);
     }
+
+    @PostMapping("/delete")
+    RedirectView removeItem(@RequestParam @NotEmpty String cakeName) {
+        basketService.removeItem(cakeName);
+        return new RedirectView("/basket");
+    }
 }
