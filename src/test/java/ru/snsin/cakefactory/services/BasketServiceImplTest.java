@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BasketServiceImplTest {
 
@@ -41,6 +42,21 @@ class BasketServiceImplTest {
 
         assertEquals(2, getItemCount(croissantName).orElseThrow());
         assertEquals(1, getItemCount(baguetteName).orElseThrow());
+    }
+
+    @Test
+    void shouldRemoveItems() {
+        final String baguetteName = "Fresh Baguette";
+        final CakeItem baguette = new CakeItem(baguetteName, new BigDecimal("0.95"));
+
+        basketService.addItem(baguette);
+        basketService.addItem(baguette);
+
+        basketService.removeItem(baguetteName);
+        assertEquals(1, getItemCount(baguetteName).orElseThrow());
+
+        basketService.removeItem(baguetteName);
+        assertTrue(getItemCount(baguetteName).isEmpty());
     }
 
     private Optional<Integer> getItemCount(String itemName) {
