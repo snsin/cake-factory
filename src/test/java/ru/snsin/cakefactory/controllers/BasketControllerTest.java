@@ -3,6 +3,7 @@ package ru.snsin.cakefactory.controllers;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.ThrowingSupplier;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -87,6 +88,20 @@ class BasketControllerTest {
         final HtmlSubmitInput removeButton =
                 page.querySelector("tbody tr form input[type=submit]");
         assertTrue(removeButton.asText().contains("Remove"));
-        assertDoesNotThrow(() -> removeButton.click());
+        assertDoesNotThrow((ThrowingSupplier<Object>) removeButton::click);
+    }
+
+    @Test
+    void shouldRenderCompleteOrderForm() throws IOException {
+        final String carrotCakeName = "Carrot Cake";
+
+        Mockito.when(basketService.getNameCountPairs())
+                .thenReturn(Collections.singletonList(new BasketItem(carrotCakeName, 1)));
+
+        final HtmlPage basketPage = webClient.getPage("/basket");
+        final HtmlForm orderInfo =
+                assertDoesNotThrow(() -> basketPage.getFormByName("orderInfo"));
+        final HtmlButton completeOrderButton = orderInfo.querySelector("button[type=submit]");
+        assertTrue(completeOrderButton.asText().contains("Complete order"));
     }
 }
