@@ -52,4 +52,9 @@ public class BasketServiceImpl implements BasketService {
             }
         }
     }
+
+    @Override
+    public void clearBasket() {
+        items.clear();
+    }
 }
