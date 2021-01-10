@@ -11,4 +11,5 @@ public interface BasketService {
     List<CakeItem> getItems();
     List<BasketItem> getNameCountPairs();
     void removeItem(String cakeName);
+    void clearBasket();
 }
