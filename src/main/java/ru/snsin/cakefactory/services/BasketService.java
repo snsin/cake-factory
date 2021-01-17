@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface BasketService {
     int countItems();
-    void addItem(CakeItem cake);
+    void addItem(String sku);
     List<CakeItem> getItems();
-    List<BasketItem> getNameCountPairs();
-    void removeItem(String cakeName);
+    List<BasketItem> getBasketItems();
+    void removeItem(String sku);
     void clearBasket();
 }

@@ -41,11 +41,13 @@ class BasketControllerTest {
 
     @Test
     void addItem() throws Exception {
-        final String expectedItemName = "Victoria Sponge";
+        final String itemSku = "vs";
 
         mockMvc.perform(post("/basket")
-                .queryParam("cakeName", expectedItemName))
+                .queryParam("sku", itemSku))
                 .andExpect(status().is3xxRedirection());
+
+        Mockito.verify(basketService).addItem(itemSku);
     }
 
     @Test
@@ -68,7 +70,7 @@ class BasketControllerTest {
         final String chocolateCroissant = "Chocolate Croissant";
         final BasketItem expectedItem = createBasketItem(chocolateCroissant, 1);
 
-        Mockito.when(basketService.getNameCountPairs())
+        Mockito.when(basketService.getBasketItems())
                 .thenReturn(Collections.singletonList(expectedItem));
 
         final HtmlPage page = webClient.getPage("/basket");
@@ -83,7 +85,7 @@ class BasketControllerTest {
         final String baguette = "Fresh Baguette";
         final BasketItem expectedItem = createBasketItem(baguette, 2);
 
-        Mockito.when(basketService.getNameCountPairs())
+        Mockito.when(basketService.getBasketItems())
                 .thenReturn(Collections.singletonList(expectedItem));
 
         final HtmlPage page = webClient.getPage("/basket");
@@ -97,7 +99,7 @@ class BasketControllerTest {
     void shouldRenderCompleteOrderForm() throws IOException {
         final String carrotCakeName = "Carrot Cake";
 
-        Mockito.when(basketService.getNameCountPairs())
+        Mockito.when(basketService.getBasketItems())
                 .thenReturn(Collections.singletonList(createBasketItem(carrotCakeName, 1)));
 
         final HtmlPage basketPage = webClient.getPage("/basket");
@@ -105,6 +107,17 @@ class BasketControllerTest {
                 assertDoesNotThrow(() -> basketPage.getFormByName("orderInfo"));
         final HtmlButton completeOrderButton = orderInfo.querySelector("button[type=submit]");
         assertTrue(completeOrderButton.asText().contains("Complete order"));
+    }
+
+    @Test
+    void shouldRemoveItemFromBasket() throws Exception {
+        final String itemSku = "rv";
+
+        mockMvc.perform(post("/basket/delete")
+                .queryParam("sku", itemSku))
+                .andExpect(status().is3xxRedirection());
+
+        Mockito.verify(basketService).removeItem(itemSku);
     }
 
     private BasketItem createBasketItem(String name, int count) {
