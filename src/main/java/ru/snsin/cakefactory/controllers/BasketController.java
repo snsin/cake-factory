@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.snsin.cakefactory.domain.CakeItem;
 import ru.snsin.cakefactory.services.BasketService;
-import ru.snsin.cakefactory.services.CakeCatalogService;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.*;
@@ -19,19 +17,14 @@ import java.util.*;
 public class BasketController {
 
     private final BasketService basketService;
-    private final CakeCatalogService catalogService;
 
-    public BasketController(BasketService basketService, CakeCatalogService catalogService) {
+    public BasketController(BasketService basketService) {
         this.basketService = basketService;
-        this.catalogService = catalogService;
     }
 
     @PostMapping
-    RedirectView addItem(@RequestParam @NotEmpty String cakeName) {
-        final Optional<CakeItem> addingCake = catalogService.getAll().stream()
-                .filter(cakeItem -> cakeItem.getName().equals(cakeName))
-                .findAny();
-        addingCake.ifPresent(basketService::addItem);
+    RedirectView addItem(@RequestParam @NotEmpty String sku) {
+        basketService.addItem(sku);
         return new RedirectView("/");
     }
 
@@ -40,13 +33,13 @@ public class BasketController {
         Map<String, Object> basketModel = new HashMap<>();
         basketModel.put("basketItemsCount", basketService.countItems());
         basketModel.put("basket?", true);
-        basketModel.put("basketItems", basketService.getNameCountPairs());
+        basketModel.put("basketItems", basketService.getBasketItems());
         return new ModelAndView("basket", basketModel);
     }
 
     @PostMapping("/delete")
-    RedirectView removeItem(@RequestParam @NotEmpty String cakeName) {
-        basketService.removeItem(cakeName);
+    RedirectView removeItem(@RequestParam @NotEmpty String sku) {
+        basketService.removeItem(sku);
         return new RedirectView("/basket");
     }
 }

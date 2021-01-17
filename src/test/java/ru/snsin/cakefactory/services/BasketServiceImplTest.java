@@ -2,9 +2,10 @@ package ru.snsin.cakefactory.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import ru.snsin.cakefactory.components.BasketServiceImpl;
 import ru.snsin.cakefactory.domain.BasketItem;
 import ru.snsin.cakefactory.domain.CakeItem;
-import ru.snsin.cakefactory.storage.BasketServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -14,54 +15,59 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BasketServiceImplTest {
 
+    CakeCatalogService cakeCatalogService;
+
     private BasketService basketService;
+    private String baguetteSku;
+    private String croissantSku;
 
     @BeforeEach
     void setUp() {
-        basketService = new BasketServiceImpl();
+        cakeCatalogService = Mockito.mock(CakeCatalogService.class);
+        basketService = new BasketServiceImpl(cakeCatalogService);
+        baguetteSku = "b";
+        croissantSku = "abcr";
+        Mockito.when(cakeCatalogService.getItemBySku(croissantSku))
+                .thenReturn(new CakeItem(croissantSku, "All Butter Croissant", new BigDecimal("0.95")));
+        Mockito.when(cakeCatalogService.getItemBySku(baguetteSku))
+                .thenReturn(new CakeItem(baguetteSku, "Fresh Baguette", new BigDecimal("0.75")));
     }
 
     @Test
     void shouldIncreaseItemsCountOnAdd() {
-        final CakeItem cake = new CakeItem("abcr","All Butter Croissant", new BigDecimal("0.95"));
-        basketService.addItem(cake);
+        basketService.addItem(croissantSku);
         assertEquals(1, basketService.countItems());
-        basketService.addItem(cake);
+        basketService.addItem(croissantSku);
         assertEquals(2, basketService.countItems());
     }
 
     @Test
     void shouldReturnCountedItems() {
-        final String croissantName = "All Butter Croissant";
-        final String baguetteName = "Fresh Baguette";
-        final CakeItem croissant = new CakeItem("abcr", croissantName, new BigDecimal("0.95"));
 
-        basketService.addItem(croissant);
-        basketService.addItem(croissant);
-        basketService.addItem(new CakeItem("b", baguetteName, new BigDecimal("0.75")));
+        basketService.addItem(croissantSku);
+        basketService.addItem(croissantSku);
+        basketService.addItem(baguetteSku);
 
-        assertEquals(2, getItemCount(croissantName).orElseThrow());
-        assertEquals(1, getItemCount(baguetteName).orElseThrow());
+        assertEquals(2, getItemCount(croissantSku).orElseThrow());
+        assertEquals(1, getItemCount(baguetteSku).orElseThrow());
     }
 
     @Test
     void shouldRemoveItems() {
-        final String baguetteName = "Fresh Baguette";
-        final CakeItem baguette = new CakeItem("b", baguetteName, new BigDecimal("0.95"));
 
-        basketService.addItem(baguette);
-        basketService.addItem(baguette);
+        basketService.addItem(baguetteSku);
+        basketService.addItem(baguetteSku);
 
-        basketService.removeItem(baguetteName);
-        assertEquals(1, getItemCount(baguetteName).orElseThrow());
+        basketService.removeItem(baguetteSku);
+        assertEquals(1, getItemCount(baguetteSku).orElseThrow());
 
-        basketService.removeItem(baguetteName);
-        assertTrue(getItemCount(baguetteName).isEmpty());
+        basketService.removeItem(baguetteSku);
+        assertTrue(getItemCount(baguetteSku).isEmpty());
     }
 
-    private Optional<Integer> getItemCount(String itemName) {
-        return basketService.getNameCountPairs().stream()
-                .filter(item -> item.getCake().getName().equals(itemName))
+    private Optional<Integer> getItemCount(String itemSku) {
+        return basketService.getBasketItems().stream()
+                .filter(item -> item.getCake().getSku().equals(itemSku))
                 .findAny().map(BasketItem::getCount);
     }
 }
