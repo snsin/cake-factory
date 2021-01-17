@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.snsin.cakefactory.domain.CakeItem;
-import ru.snsin.cakefactory.services.BasketService;
+import ru.snsin.cakefactory.components.Basket;
 import ru.snsin.cakefactory.services.CakeCatalogService;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ class CatalogControllerTest {
     CakeCatalogService cakeCatalog;
 
     @MockBean
-    BasketService basketService;
+    Basket basket;
 
     @Test
     void shouldReturnIndex() throws Exception {
@@ -93,7 +93,7 @@ class CatalogControllerTest {
     void shouldDisplayItemsInBasket() throws IOException {
         int expectedItemsCount = 2;
         String expectedBasketContent = String.format("Basket: %d item(s)", expectedItemsCount);
-        Mockito.when(basketService.countItems()).thenReturn(expectedItemsCount);
+        Mockito.when(basket.countItems()).thenReturn(expectedItemsCount);
         final HtmlPage page = webClient.getPage("/");
         final DomNodeList<DomNode> navigations =
                 page.querySelectorAll("li.nav-item > a.nav-link");

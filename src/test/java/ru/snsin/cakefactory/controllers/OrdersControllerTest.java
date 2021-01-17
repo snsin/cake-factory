@@ -8,7 +8,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import ru.snsin.cakefactory.services.BasketService;
+import ru.snsin.cakefactory.components.Basket;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,7 +21,7 @@ class OrdersControllerTest {
 
     @SuppressWarnings("unused")
     @MockBean
-    private BasketService basketService;
+    private Basket basket;
 
     @Test
     void shouldHandleOrdersPostRequest() throws Exception {

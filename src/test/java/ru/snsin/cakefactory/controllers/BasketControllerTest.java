@@ -11,7 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.snsin.cakefactory.domain.BasketItem;
 import ru.snsin.cakefactory.domain.CakeItem;
-import ru.snsin.cakefactory.services.BasketService;
+import ru.snsin.cakefactory.components.Basket;
 import ru.snsin.cakefactory.services.CakeCatalogService;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ class BasketControllerTest {
     CakeCatalogService cakeCatalog;
 
     @MockBean
-    BasketService basketService;
+    Basket basketService;
 
 
     @Test

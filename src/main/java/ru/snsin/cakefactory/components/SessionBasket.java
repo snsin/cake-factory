@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import ru.snsin.cakefactory.domain.BasketItem;
 import ru.snsin.cakefactory.domain.CakeItem;
-import ru.snsin.cakefactory.services.BasketService;
 import ru.snsin.cakefactory.services.CakeCatalogService;
 
 import java.util.*;
@@ -17,12 +16,12 @@ import static java.util.stream.Collectors.summingInt;
 
 @Component
 @SessionScope(proxyMode = ScopedProxyMode.INTERFACES)
-public class BasketServiceImpl implements BasketService {
+public class SessionBasket implements Basket {
 
     private final List<CakeItem> items = new ArrayList<>();
     private final CakeCatalogService cakeCatalog;
 
-    public BasketServiceImpl(CakeCatalogService cakeCatalog) {
+    public SessionBasket(CakeCatalogService cakeCatalog) {
         this.cakeCatalog = cakeCatalog;
     }
 
