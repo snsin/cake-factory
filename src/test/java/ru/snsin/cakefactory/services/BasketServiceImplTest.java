@@ -23,7 +23,7 @@ class BasketServiceImplTest {
 
     @Test
     void shouldIncreaseItemsCountOnAdd() {
-        final CakeItem cake = new CakeItem("All Butter Croissant", new BigDecimal("0.95"));
+        final CakeItem cake = new CakeItem("abcr","All Butter Croissant", new BigDecimal("0.95"));
         basketService.addItem(cake);
         assertEquals(1, basketService.countItems());
         basketService.addItem(cake);
@@ -34,11 +34,11 @@ class BasketServiceImplTest {
     void shouldReturnCountedItems() {
         final String croissantName = "All Butter Croissant";
         final String baguetteName = "Fresh Baguette";
-        final CakeItem croissant = new CakeItem(croissantName, new BigDecimal("0.95"));
+        final CakeItem croissant = new CakeItem("abcr", croissantName, new BigDecimal("0.95"));
 
         basketService.addItem(croissant);
         basketService.addItem(croissant);
-        basketService.addItem(new CakeItem(baguetteName, new BigDecimal("0.75")));
+        basketService.addItem(new CakeItem("b", baguetteName, new BigDecimal("0.75")));
 
         assertEquals(2, getItemCount(croissantName).orElseThrow());
         assertEquals(1, getItemCount(baguetteName).orElseThrow());
@@ -47,7 +47,7 @@ class BasketServiceImplTest {
     @Test
     void shouldRemoveItems() {
         final String baguetteName = "Fresh Baguette";
-        final CakeItem baguette = new CakeItem(baguetteName, new BigDecimal("0.95"));
+        final CakeItem baguette = new CakeItem("b", baguetteName, new BigDecimal("0.95"));
 
         basketService.addItem(baguette);
         basketService.addItem(baguette);

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CakeCatalogService {
     List<CakeItem> getAll();
+    CakeItem getItemBySku(String sku);
 }

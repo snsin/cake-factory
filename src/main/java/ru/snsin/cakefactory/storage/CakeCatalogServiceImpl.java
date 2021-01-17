@@ -5,6 +5,7 @@ import ru.snsin.cakefactory.domain.CakeItem;
 import ru.snsin.cakefactory.services.CakeCatalogService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,7 +19,18 @@ public class CakeCatalogServiceImpl implements CakeCatalogService {
     @Override
     public List<CakeItem> getAll() {
         return cakeRepository.findAll().stream()
-                .map(entity -> new CakeItem(entity.getName(), entity.getPrice()))
+                .map(this::createCakeFromEntity)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public CakeItem getItemBySku(String sku) {
+        CakeEntity entity = cakeRepository.findById(sku)
+                .orElseThrow(NoSuchElementException::new);
+        return createCakeFromEntity(entity);
+    }
+
+    private CakeItem createCakeFromEntity(CakeEntity entity) {
+        return new CakeItem(entity.getId(), entity.getName(), entity.getPrice());
     }
 }

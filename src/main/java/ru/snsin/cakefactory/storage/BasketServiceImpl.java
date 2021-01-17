@@ -1,5 +1,6 @@
 package ru.snsin.cakefactory.storage;
 
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 import ru.snsin.cakefactory.domain.BasketItem;
@@ -13,7 +14,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
 
 @Service
-@SessionScope
+@SessionScope(proxyMode = ScopedProxyMode.INTERFACES)
 public class BasketServiceImpl implements BasketService {
 
     private final List<CakeItem> items = new ArrayList<>();
