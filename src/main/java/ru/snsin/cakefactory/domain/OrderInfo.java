@@ -1,15 +1,12 @@
 package ru.snsin.cakefactory.domain;
 
-import lombok.Data;
+import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
 
-@Data
+@Value
 public class OrderInfo {
-    @NotBlank
-    private String addressLine1;
-    @NotBlank
-    private String addressLine2;
-    @NotBlank
-    private String postCode;
+    @NotBlank String addressLine1;
+    @NotBlank String addressLine2;
+    @NotBlank String postCode;
 }
