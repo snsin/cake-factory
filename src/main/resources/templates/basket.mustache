@@ -27,12 +27,12 @@
               <tbody>
               {{#basketItems}}
               <tr>
-                <th scope="row">{{name}}</th>
+                <th scope="row">{{cake.name}}</th>
                 <td>x{{count}}</td>
                 <td>
                   <form action="/basket/delete" method="post">
                     <label>
-                      <input hidden name="cakeName" value="{{name}}">
+                      <input hidden name="cakeName" value="{{cake.name}}">
                     </label>
                     <input type="submit" class="btn btn-primary" value="Remove">
                   </form>

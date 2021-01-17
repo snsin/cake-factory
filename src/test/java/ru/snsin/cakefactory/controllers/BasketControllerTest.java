@@ -10,10 +10,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.snsin.cakefactory.domain.BasketItem;
+import ru.snsin.cakefactory.domain.CakeItem;
 import ru.snsin.cakefactory.services.BasketService;
 import ru.snsin.cakefactory.services.CakeCatalogService;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -64,7 +66,7 @@ class BasketControllerTest {
     @Test
     void shouldRenderBasketItems() throws IOException {
         final String chocolateCroissant = "Chocolate Croissant";
-        final BasketItem expectedItem = new BasketItem(chocolateCroissant, 1);
+        final BasketItem expectedItem = createBasketItem(chocolateCroissant, 1);
 
         Mockito.when(basketService.getNameCountPairs())
                 .thenReturn(Collections.singletonList(expectedItem));
@@ -79,7 +81,7 @@ class BasketControllerTest {
     @Test
     void shouldRenderRemoveButton() throws IOException {
         final String baguette = "Fresh Baguette";
-        final BasketItem expectedItem = new BasketItem(baguette, 2);
+        final BasketItem expectedItem = createBasketItem(baguette, 2);
 
         Mockito.when(basketService.getNameCountPairs())
                 .thenReturn(Collections.singletonList(expectedItem));
@@ -96,12 +98,17 @@ class BasketControllerTest {
         final String carrotCakeName = "Carrot Cake";
 
         Mockito.when(basketService.getNameCountPairs())
-                .thenReturn(Collections.singletonList(new BasketItem(carrotCakeName, 1)));
+                .thenReturn(Collections.singletonList(createBasketItem(carrotCakeName, 1)));
 
         final HtmlPage basketPage = webClient.getPage("/basket");
         final HtmlForm orderInfo =
                 assertDoesNotThrow(() -> basketPage.getFormByName("orderInfo"));
         final HtmlButton completeOrderButton = orderInfo.querySelector("button[type=submit]");
         assertTrue(completeOrderButton.asText().contains("Complete order"));
+    }
+
+    private BasketItem createBasketItem(String name, int count) {
+        CakeItem cake = new CakeItem(name, name, BigDecimal.TEN);
+        return new BasketItem(cake, count);
     }
 }

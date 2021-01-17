@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value
 public class BasketItem {
-    String name;
+    CakeItem cake;
     Integer count;
 }

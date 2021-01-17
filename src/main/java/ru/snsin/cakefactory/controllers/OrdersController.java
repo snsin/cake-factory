@@ -25,7 +25,7 @@ public class OrdersController {
     @PostMapping
     RedirectView placeOrder(@Valid OrderInfo orderInfo) {
         String orderItems = basketService.getNameCountPairs().stream()
-                .map(item -> String.format("%s: x%d", item.getName(), item.getCount()))
+                .map(item -> String.format("%s: x%d", item.getCake().getName(), item.getCount()))
                 .collect(Collectors.joining("\n"));
         basketService.clearBasket();
         log.info("Order items {}", orderItems);
