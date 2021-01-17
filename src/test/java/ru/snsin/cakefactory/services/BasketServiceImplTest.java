@@ -61,7 +61,7 @@ class BasketServiceImplTest {
 
     private Optional<Integer> getItemCount(String itemName) {
         return basketService.getNameCountPairs().stream()
-                .filter(item -> item.getName().equals(itemName))
+                .filter(item -> item.getCake().getName().equals(itemName))
                 .findAny().map(BasketItem::getCount);
     }
 }

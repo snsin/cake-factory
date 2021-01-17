@@ -8,6 +8,7 @@ import ru.snsin.cakefactory.domain.CakeItem;
 import ru.snsin.cakefactory.services.BasketService;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -36,8 +37,8 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public List<BasketItem> getNameCountPairs() {
-        final Map<String, Integer> countedItems = items.stream()
-                .collect(groupingBy(CakeItem::getName, summingInt(item -> 1)));
+        final Map<CakeItem, Integer> countedItems = items.stream()
+                .collect(groupingBy(Function.identity(), summingInt(item -> 1)));
         return countedItems.entrySet().stream()
                 .map(nameCount -> new BasketItem(nameCount.getKey(), nameCount.getValue()))
                 .collect(Collectors.toUnmodifiableList());
