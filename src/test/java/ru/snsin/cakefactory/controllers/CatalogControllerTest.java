@@ -48,9 +48,9 @@ class CatalogControllerTest {
     void shouldRenderItems() throws Exception {
 
         final List<CakeItem> items = new ArrayList<>();
-        items.add(new CakeItem("Red Velvet", new BigDecimal("3.95")));
-        items.add(new CakeItem("Fresh Baguette", new BigDecimal("1.60")));
-        items.add(new CakeItem("Victoria Sponge", new BigDecimal("5.45")));
+        items.add(new CakeItem("rv","Red Velvet", new BigDecimal("3.95")));
+        items.add(new CakeItem("b", "Fresh Baguette", new BigDecimal("1.60")));
+        items.add(new CakeItem("vs", "Victoria Sponge", new BigDecimal("5.45")));
         final List<String> itemsNames = items.stream()
                 .map(CakeItem::getName).collect(Collectors.toList());
 
@@ -69,7 +69,7 @@ class CatalogControllerTest {
     @Test
     void shouldDisplayPriceInPounds() throws IOException {
         List<CakeItem> redVelvetList =
-                Collections.singletonList(new CakeItem("Red Velvet", new BigDecimal("3.90")));
+                Collections.singletonList(new CakeItem("rv","Red Velvet", new BigDecimal("3.90")));
 
         Mockito.when(cakeCatalog.getAll()).thenReturn(redVelvetList);
         final HtmlPage page = webClient.getPage("/");
@@ -108,7 +108,7 @@ class CatalogControllerTest {
 
     @Test
     void shouldDisplayAddButtonOnItem() throws IOException {
-        CakeItem expectedItem = new CakeItem("Victoria Sponge", new BigDecimal("5.45"));
+        CakeItem expectedItem = new CakeItem("vs","Victoria Sponge", new BigDecimal("5.45"));
 
         Mockito.when(cakeCatalog.getAll()).thenReturn(Collections.singletonList(expectedItem));
 
