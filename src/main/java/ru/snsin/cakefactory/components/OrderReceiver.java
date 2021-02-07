@@ -2,11 +2,11 @@ package ru.snsin.cakefactory.components;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 import ru.snsin.cakefactory.domain.OrderPlacedEvent;
 
 @Slf4j
-@Controller
+@Component
 public class OrderReceiver {
 
     @EventListener
