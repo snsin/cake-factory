@@ -38,4 +38,23 @@ public class UsersIntegrationTest {
         final String homePageText = browser.pageText();
         assertTrue(homePageText.contains("Login"));
     }
+
+    @Test
+    void signupPageShouldExists() throws IOException {
+        browser.goToSignupPage();
+        final String signupPageText = browser.pageText();
+        assertTrue(signupPageText.contains("Login"));
+        assertTrue(signupPageText.contains("Email"));
+    }
+
+    @Test
+    void shouldSignUpWhenClickSignupButton() throws IOException {
+        browser.goToSignupPage();
+        final String userEmail = "login@example.com";
+        browser.fillInUserCredentials(userEmail, "password");
+        browser.fillInAddress("Line One st.", "Line 2", "PSCODE");
+        browser.clickToSignUpButton();
+
+        assertTrue(browser.pageText().contains(userEmail));
+    }
 }
