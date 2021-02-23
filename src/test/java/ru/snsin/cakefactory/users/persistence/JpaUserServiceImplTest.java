@@ -62,6 +62,19 @@ class JpaUserServiceImplTest {
         assertTrue(notExisting.isEmpty());
     }
 
+    @Test
+    void shouldSaveUsers() {
+        User user1 = new User("user@mail.com", "abc");
+        User user2 = new User("user@gmail.com", "123");
+
+        jpaUserService.save(user1);
+        jpaUserService.save(user1);
+
+        jpaUserService.save(user2);
+
+        assertEquals(2, jpaUserService.findAll().size());
+    }
+
     private UserEntity createUser(String email) {
         UserEntity user = new UserEntity();
         String password = faker.internet().password();
