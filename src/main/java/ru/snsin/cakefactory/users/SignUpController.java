@@ -23,7 +23,7 @@ public class SignUpController {
     @PostMapping
     public RedirectView signUpNewUser(User user, Address address) {
         log.info("New user signed up with email = {}", user.getEmail());
-        log.info("And address = {}", address);
+        log.info("and address = {}", address);
         return new RedirectView("/");
     }
 }
