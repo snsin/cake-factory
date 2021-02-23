@@ -5,6 +5,7 @@ import ru.snsin.cakefactory.users.User;
 import ru.snsin.cakefactory.users.UserService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,20 @@ public class JpaUserServiceImpl implements UserService {
         return userEntity.map(this::mapEntityToUser);
     }
 
+    @Override
+    public void save(User user) {
+        Objects.requireNonNull(user);
+        userRepository.save(mapUserToUserEntity(user));
+    }
+
     private User mapEntityToUser(UserEntity userEntity) {
         return new User(userEntity.getEmail(), userEntity.getPassword());
+    }
+
+    private UserEntity mapUserToUserEntity(User user) {
+        final UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(user.getEmail());
+        userEntity.setPassword(user.getPassword());
+        return userEntity;
     }
 }
