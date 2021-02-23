@@ -6,16 +6,32 @@ import ru.snsin.cakefactory.users.UserService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class JpaUserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+
+    public JpaUserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public List<User> findAll() {
-        return null;
+        final List<UserEntity> all = userRepository.findAll();
+        return all.stream()
+                .map(this::mapEntityToUser)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return Optional.empty();
+        final Optional<UserEntity> userEntity = userRepository.findById(email);
+        return userEntity.map(this::mapEntityToUser);
+    }
+
+    private User mapEntityToUser(UserEntity userEntity) {
+        return new User(userEntity.getEmail(), userEntity.getPassword());
     }
 }

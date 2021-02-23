@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import ru.snsin.cakefactory.users.User;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,12 +19,15 @@ class JpaUserServiceImplTest {
     @Autowired
     TestEntityManager testEntityManager;
 
+    @Autowired
+    UserRepository userRepository;
+
     private JpaUserServiceImpl jpaUserService;
     private Faker faker;
 
     @BeforeEach
     void setUp() {
-        jpaUserService = new JpaUserServiceImpl();
+        jpaUserService = new JpaUserServiceImpl(userRepository);
         faker = new Faker();
     }
 
@@ -39,8 +41,13 @@ class JpaUserServiceImplTest {
         assertEquals(2, allUsers.size());
         assertTrue(allUsers.stream().anyMatch(user -> user.getEmail().equals(user1.getEmail())));
         assertTrue(allUsers.stream().anyMatch(user -> user.getEmail().equals(user2.getEmail())));
+    }
 
-
+    @Test
+    void shouldReturnEmptyListWhenRepositoryIsEmpty() {
+        testEntityManager.getEntityManager()
+                .createQuery("DELETE FROM UserEntity").executeUpdate();
+        assertTrue(jpaUserService.findAll().isEmpty());
     }
 
     @Test
@@ -53,7 +60,6 @@ class JpaUserServiceImplTest {
 
         assertTrue(foundByEmail.isPresent());
         assertTrue(notExisting.isEmpty());
-
     }
 
     private UserEntity createUser(String email) {

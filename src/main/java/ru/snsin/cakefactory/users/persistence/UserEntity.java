@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user_entity")
 @Data
 @Setter(AccessLevel.PACKAGE)
 @Getter(AccessLevel.PACKAGE)
