@@ -35,6 +35,11 @@ public class JpaUserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         Objects.requireNonNull(user);
+        final String email = user.getEmail();
+        if (userRepository.existsById(email)) {
+            final String message = String.format("User with email = %s already exists", email);
+            throw new RuntimeException(message);
+        }
         userRepository.save(mapUserToUserEntity(user));
     }
 

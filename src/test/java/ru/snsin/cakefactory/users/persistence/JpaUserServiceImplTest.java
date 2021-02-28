@@ -68,11 +68,18 @@ class JpaUserServiceImplTest {
         User user2 = new User("user@gmail.com", "123");
 
         jpaUserService.save(user1);
-        jpaUserService.save(user1);
-
         jpaUserService.save(user2);
 
         assertEquals(2, jpaUserService.findAll().size());
+    }
+
+    @Test
+    void shouldNotSaveUserIfUserIfEmailAlreadyExists() {
+        UserEntity user = createUser("user@mail.com");
+        User userWithSameEmail = new User(user.getEmail(), faker.internet().password());
+
+        assertThrows(RuntimeException.class, () -> jpaUserService.save(userWithSameEmail));
+
     }
 
     private UserEntity createUser(String email) {
