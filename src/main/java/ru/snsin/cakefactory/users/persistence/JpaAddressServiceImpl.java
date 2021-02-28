@@ -1,5 +1,6 @@
 package ru.snsin.cakefactory.users.persistence;
 
+import org.springframework.stereotype.Service;
 import ru.snsin.cakefactory.users.Address;
 import ru.snsin.cakefactory.users.AddressService;
 
@@ -7,6 +8,7 @@ import java.util.Optional;
 
 import static org.springframework.util.StringUtils.hasText;
 
+@Service
 public class JpaAddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
