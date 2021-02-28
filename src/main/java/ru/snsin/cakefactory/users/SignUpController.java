@@ -16,12 +16,10 @@ import java.util.Collections;
 @Slf4j
 public class SignUpController {
 
-    private final UserService userService;
-    private final AddressService addressService;
+    private final SignUp signUp;
 
-    public SignUpController(UserService userService, AddressService addressService) {
-        this.userService = userService;
-        this.addressService = addressService;
+    public SignUpController(SignUp signUp) {
+        this.signUp = signUp;
     }
 
     @GetMapping
@@ -32,9 +30,9 @@ public class SignUpController {
     @PostMapping
     public RedirectView signUpNewUser(@Valid User user, @Valid Address address) {
         log.info("New user signed up with email = {}", user.getEmail());
-        log.info("and address = {}", address);
-        userService.save(user);
-        addressService.save(address, user.getEmail());
+        signUp.signUp(user, address);
+        log.info("New user signed up with email = {}", signUp.getEmail());
+        log.info("and address = {}", signUp.getAddress());
         return new RedirectView("/");
     }
 }
