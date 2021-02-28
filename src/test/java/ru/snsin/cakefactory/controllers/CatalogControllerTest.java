@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.snsin.cakefactory.domain.CakeItem;
 import ru.snsin.cakefactory.components.Basket;
 import ru.snsin.cakefactory.services.CakeCatalogService;
+import ru.snsin.cakefactory.users.SignUp;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -38,6 +39,9 @@ class CatalogControllerTest {
     @MockBean
     Basket basket;
 
+    @MockBean
+    SignUp signUp;
+
     @Test
     void shouldReturnIndex() throws Exception {
         final Page page = webClient.getPage("/");
@@ -62,6 +66,7 @@ class CatalogControllerTest {
 
         assertEquals(items.size(), titles.size());
         assertTrue(titles.containsAll(itemsNames));
+        Mockito.verify(signUp).getEmail();
     }
 
 
