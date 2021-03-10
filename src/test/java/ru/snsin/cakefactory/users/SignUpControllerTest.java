@@ -1,6 +1,5 @@
 package ru.snsin.cakefactory.users;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -39,11 +37,11 @@ class SignUpControllerTest {
 
     @Test
     void userAndAddressShouldStoreOnSignup() throws Exception {
-        User user = new User("test@example.com", "pass");
+        Account account = new Account("test@example.com", "pass");
         Address address = new Address("al1", "al2", "code");
         MultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
-        requestParams.add("email", user.getEmail());
-        requestParams.add("password", user.getPassword());
+        requestParams.add("email", account.getEmail());
+        requestParams.add("password", account.getPassword());
         requestParams.add("addressLine1", address.getAddressLine1());
         requestParams.add("addressLine2", address.getAddressLine2());
         requestParams.add("postcode", address.getPostcode());
@@ -52,7 +50,7 @@ class SignUpControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection());
 
-        Mockito.verify(sessionSignUp).signUp(user, address);
+        Mockito.verify(sessionSignUp).signUp(account, address);
 
     }
 

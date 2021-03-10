@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Setter(AccessLevel.PACKAGE)
 @Getter(AccessLevel.PACKAGE)
-public class UserEntity {
+public class AccountEntity {
     @Id
     private String email;
     @NotBlank

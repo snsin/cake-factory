@@ -3,5 +3,5 @@ package ru.snsin.cakefactory.users;
 public interface SignUp {
     String getEmail();
     Address getAddress();
-    void signUp(User user, Address address);
+    void signUp(Account account, Address address);
 }

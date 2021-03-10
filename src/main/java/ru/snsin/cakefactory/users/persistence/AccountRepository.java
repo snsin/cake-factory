@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface UserRepository extends CrudRepository<UserEntity, String> {
+public interface AccountRepository extends CrudRepository<AccountEntity, String> {
     @SuppressWarnings("NullableProblems")
-    List<UserEntity> findAll();
+    List<AccountEntity> findAll();
 }

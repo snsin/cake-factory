@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Value
-public class User {
+public class Account {
     @Email
     String email;
     @NotBlank

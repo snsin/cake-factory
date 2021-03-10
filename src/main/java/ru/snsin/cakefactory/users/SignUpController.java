@@ -28,9 +28,9 @@ public class SignUpController {
     }
 
     @PostMapping
-    public RedirectView signUpNewUser(@Valid User user, @Valid Address address) {
-        log.info("New user signed up with email = {}", user.getEmail());
-        signUp.signUp(user, address);
+    public RedirectView signUpNewUser(@Valid Account account, @Valid Address address) {
+        log.info("New user signed up with email = {}", account.getEmail());
+        signUp.signUp(account, address);
         log.info("New user signed up with email = {}", signUp.getEmail());
         log.info("and address = {}", signUp.getAddress());
         return new RedirectView("/");
