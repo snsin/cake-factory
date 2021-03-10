@@ -6,13 +6,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.ThrowingSupplier;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.access.SecurityConfig;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.snsin.cakefactory.domain.BasketItem;
 import ru.snsin.cakefactory.domain.CakeItem;
 import ru.snsin.cakefactory.components.Basket;
 import ru.snsin.cakefactory.services.CakeCatalogService;
+import ru.snsin.cakefactory.users.AccountService;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -22,12 +27,17 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 
-@WebMvcTest(BasketController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class BasketControllerTest {
 
     @Autowired
     WebClient webClient;
+
+    @Autowired
+    AccountService accountService;
 
     @Autowired
     MockMvc mockMvc;
@@ -43,7 +53,7 @@ class BasketControllerTest {
     void addItem() throws Exception {
         final String itemSku = "vs";
 
-        mockMvc.perform(post("/basket")
+        mockMvc.perform(post("/basket").with(csrf())
                 .queryParam("sku", itemSku))
                 .andExpect(status().is3xxRedirection());
 
@@ -113,7 +123,7 @@ class BasketControllerTest {
     void shouldRemoveItemFromBasket() throws Exception {
         final String itemSku = "rv";
 
-        mockMvc.perform(post("/basket/delete")
+        mockMvc.perform(post("/basket/delete").with(csrf())
                 .queryParam("sku", itemSku))
                 .andExpect(status().is3xxRedirection());
 
