@@ -34,6 +34,7 @@
             <label for="postCode">Post code</label>
             <input id="postCode" type="text" minlength="1" name="postcode" value="">
           </div>
+          <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
           <button id="sign-up" class="btn btn-primary" type="submit">Signup</button>
         </form>
       </div>

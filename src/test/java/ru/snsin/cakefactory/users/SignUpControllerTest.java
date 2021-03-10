@@ -3,18 +3,22 @@ package ru.snsin.cakefactory.users;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(SignUpController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class SignUpControllerTest {
 
     @Autowired
@@ -31,7 +35,7 @@ class SignUpControllerTest {
 
     @Test
     void userShouldNotSignUpWhenParametersInvalid() throws Exception {
-        mockMvc.perform(post("/signup"))
+        mockMvc.perform(post("/signup").with(csrf()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -46,7 +50,7 @@ class SignUpControllerTest {
         requestParams.add("addressLine2", address.getAddressLine2());
         requestParams.add("postcode", address.getPostcode());
 
-        mockMvc.perform(post("/signup").params(requestParams))
+        mockMvc.perform(post("/signup").with(csrf()).params(requestParams))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection());
 

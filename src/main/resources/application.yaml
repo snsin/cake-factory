@@ -5,3 +5,5 @@ spring:
     password: "${db.password}"
   jpa:
     open-in-view: false
+  mustache:
+    expose-request-attributes: true
