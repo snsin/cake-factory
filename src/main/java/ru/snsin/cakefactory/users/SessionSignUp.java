@@ -9,7 +9,7 @@ import org.springframework.web.context.annotation.SessionScope;
 @SessionScope(proxyMode = ScopedProxyMode.INTERFACES)
 public class SessionSignUp implements SignUp {
 
-    private final UserService userService;
+    private final AccountService accountService;
     private final AddressService addressService;
 
     @Getter
@@ -17,16 +17,16 @@ public class SessionSignUp implements SignUp {
     @Getter
     private Address address;
 
-    public SessionSignUp(UserService userService, AddressService addressService) {
-        this.userService = userService;
+    public SessionSignUp(AccountService accountService, AddressService addressService) {
+        this.accountService = accountService;
         this.addressService = addressService;
     }
 
     @Override
-    public void signUp(User user, Address address) {
-        userService.save(user);
-        this.email = user.getEmail();
-        addressService.save(address, user.getEmail());
+    public void signUp(Account account, Address address) {
+        accountService.save(account);
+        this.email = account.getEmail();
+        addressService.save(address, account.getEmail());
         this.address = address;
 
     }
