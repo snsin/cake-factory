@@ -1,5 +1,6 @@
 package ru.snsin.cakefactory.users;
 
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,13 @@ public class UsersIntegrationTest {
 
 
     private BrowserClient browser;
+    private Faker faker;
 
 
     @BeforeEach
     void setUp() {
         browser = new BrowserClient(mockMvc, testEnv);
+        faker = new Faker();
     }
 
     @Test
@@ -64,5 +67,25 @@ public class UsersIntegrationTest {
         final String signupForm = browser.getCsrfInput();
 
         assertTrue(signupForm.contains("_csrf"));
+    }
+
+    @Test
+    void addressShouldBePopulatedAfterSignup() throws IOException {
+        Account account = new Account(faker.internet().safeEmailAddress(), faker.internet().password());
+        Address address = makeAddress();
+
+        browser.goToSignupPage();
+        browser.fillInUserCredentials(account.getEmail(), account.getPassword());
+        browser.fillInAddress(address.getAddressLine1(), address.getAddressLine2(), address.getPostcode());
+        browser.clickToSignUpButton();
+        browser.goToBasketPage();
+
+        Address populatedAddress = browser.getAddress();
+        assertEquals(address, populatedAddress);
+    }
+
+    private Address makeAddress() {
+        return new Address(faker.address().streetAddress(),
+                faker.address().secondaryAddress(), faker.address().zipCode());
     }
 }

@@ -1,8 +1,6 @@
 package ru.snsin.cakefactory.client;
 
-import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -11,6 +9,7 @@ import org.springframework.boot.test.web.htmlunit.LocalHostWebClient;
 import org.springframework.core.env.Environment;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
+import ru.snsin.cakefactory.users.Address;
 
 import java.io.IOException;
 
@@ -59,8 +58,24 @@ public class BrowserClient {
         return this.currentPage.querySelector("input[name='_csrf']").toString();
     }
 
+    public void goToBasketPage() throws IOException {
+        this.currentPage = this.mvcInitClient.getPage("/basket");
+    }
+
+    public Address getAddress() {
+        String addressLine1 = getInputValue("#addressLine1");
+        String addressLine2 = getInputValue("#addressLine2");
+        String postcode = getInputValue("#postCode");
+        return new Address(addressLine1, addressLine2, postcode);
+    }
+
     private void setValue(String selector, String value) {
         final HtmlInput input = this.currentPage.querySelector(selector);
         input.setValueAttribute(value);
+    }
+
+    private String getInputValue(String selector) {
+        final HtmlInput input = this.currentPage.querySelector(selector);
+        return input.getValueAttribute();
     }
 }
