@@ -55,6 +55,10 @@ public class BrowserClient {
 
     }
 
+    public String getCsrfInput() {
+        return this.currentPage.querySelector("input[name='_csrf']").toString();
+    }
+
     private void setValue(String selector, String value) {
         final HtmlInput input = this.currentPage.querySelector(selector);
         input.setValueAttribute(value);
