@@ -57,4 +57,12 @@ public class UsersIntegrationTest {
 
         assertTrue(browser.pageText().contains(userEmail));
     }
+
+    @Test
+    void signupFormShouldContainsCsrfToken() throws IOException {
+        browser.goToSignupPage();
+        final String signupForm = browser.getCsrfInput();
+
+        assertTrue(signupForm.contains("_csrf"));
+    }
 }
