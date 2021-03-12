@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return User.builder()
                 .username(account.getEmail())
                 .password(account.getPassword())
-                .roles("USER")
+                .roles(Account.ROLE_NAME)
                 .build();
     }
 }
