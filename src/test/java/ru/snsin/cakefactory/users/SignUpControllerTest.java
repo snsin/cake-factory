@@ -24,7 +24,7 @@ class SignUpControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    SessionSignUp sessionSignUp;
+    SignUpComponent signUpComponent;
 
     @Test
     void signUpPageShouldExist() throws Exception {
@@ -53,7 +53,7 @@ class SignUpControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection());
 
-        Mockito.verify(sessionSignUp).signUp(account, address);
+        Mockito.verify(signUpComponent).signUp(account, address);
 
     }
 

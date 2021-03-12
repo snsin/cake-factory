@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class SessionSignUpTest {
+class SignUpComponentTest {
 
     @Autowired
     AccountService accountService;
@@ -28,7 +28,7 @@ class SessionSignUpTest {
 
     @BeforeEach
     void setUp() {
-        signUp = new SessionSignUp(accountService, addressService, passwordEncoder);
+        signUp = new SignUpComponent(accountService, addressService, passwordEncoder);
         faker = new Faker();
     }
 
@@ -44,12 +44,14 @@ class SessionSignUpTest {
     }
 
     @Test
-    void shouldGetEmailAfterSignUp() {
+    void shouldSaveAccountAndAddressAfterSignUp() {
         Account account = new Account("user1@example.com", faker.internet().password());
+        Address address = makeAddress();
 
-        signUp.signUp(account, makeAddress());
+        signUp.signUp(account, address);
 
-        assertEquals(account.getEmail(), signUp.getEmail());
+        assertTrue(accountService.findByEmail(account.getEmail()).isPresent());
+        assertEquals(address, addressService.findByUserId(account.getEmail()).orElseThrow());
     }
 
     @Test
