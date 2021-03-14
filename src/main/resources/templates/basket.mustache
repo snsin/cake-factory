@@ -53,19 +53,22 @@
 
         <div class="row">
           <form name="orderInfo" action="/orders" method="post">
+            {{#address}}
             <div class="form-group">
               <label for="addressLine1">Address line 1</label>
-              <input id="addressLine1" type="text" minlength="1" name="addressLine1" value="">
+              <input id="addressLine1" type="text" minlength="1" name="addressLine1" value="{{address.addressLine1}}">
             </div>
             <div class="form-group">
               <label for="addressLine2">Address line 2</label>
-              <input id="addressLine2" type="text" minlength="1" name="addressLine2" value="">
+              <input id="addressLine2" type="text" minlength="1" name="addressLine2" value="{{address.addressLine2}}">
             </div>
             <div class="form-group">
               <label for="postCode">Post code</label>
-              <input id="postCode" type="text" minlength="1" name="postCode" value="">
+              <input id="postCode" type="text" minlength="1" name="postCode" value="{{address.postcode}}">
             </div>
+            <input hidden name="{{_csrf.parameterName}}" value="{{_csrf.token}}">
             <button class="btn btn-primary" type="submit">Complete order</button>
+            {{/address}}
           </form>
         </div>
 
