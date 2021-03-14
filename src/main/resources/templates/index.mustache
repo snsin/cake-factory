@@ -57,6 +57,7 @@
                 <h5>£{{price}}</h5>
                 <form action="/basket" method="post">
                   <input hidden name="sku" value="{{sku}}">
+                  <input hidden name="{{_csrf.parameterName}}" value="{{_csrf.token}}">
                   <input class="btn btn-primary" type="submit" value="Add">
                 </form>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>

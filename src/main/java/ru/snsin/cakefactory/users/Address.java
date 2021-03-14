@@ -6,6 +6,9 @@ import javax.validation.constraints.NotBlank;
 
 @Value
 public class Address {
+    public static final Address EMPTY_ADDRESS =
+            new Address("", "", "");
+
     @NotBlank
     String addressLine1;
     @NotBlank
