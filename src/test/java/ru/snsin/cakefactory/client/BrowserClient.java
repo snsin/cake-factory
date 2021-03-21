@@ -78,4 +78,17 @@ public class BrowserClient {
         final HtmlInput input = this.currentPage.querySelector(selector);
         return input.getValueAttribute();
     }
+
+    public void goToLoginPage() throws IOException {
+        this.currentPage = mvcInitClient.getPage("/login");
+    }
+
+    public String getLoginOrAccountLinkText() {
+        return currentPage.getElementById("login-or-account").asText();
+    }
+
+    public void clickLoginButton() throws IOException {
+        HtmlElement loginButton = currentPage.querySelector("#login-button");
+        loginButton.click();
+    }
 }
