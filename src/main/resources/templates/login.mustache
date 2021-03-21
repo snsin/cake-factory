@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{> head-partial}}
+
+<body>
+
+  <!-- Navigation -->
+  {{> navbar-partial}}
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="container">
+      <form name="loginData" action="/login" method="post">
+        <div class="row">
+          <h4>Account</h4>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label for="user-email">Email</label>
+            <input id="user-email" type="email" minlength="5" name="email" value="">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label for="user-password">Password</label>
+            <input id="user-password" type="password" minlength="6" name="password" value="">
+          </div>
+        </div>
+        <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+        <button id="login-button" class="btn btn-primary" type="submit">Login</button>
+      </form>
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  {{> footer-scripts-partial}}
+
+</body>
+
+</html>

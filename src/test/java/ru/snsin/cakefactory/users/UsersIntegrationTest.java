@@ -38,8 +38,8 @@ public class UsersIntegrationTest {
     @Test
     void loginButtonShouldExist() throws IOException {
         browser.goToHomePage();
-        final String homePageText = browser.pageText();
-        assertTrue(homePageText.contains("Login"));
+        final String loginButtonText = browser.getLoginOrAccountLinkText();
+        assertEquals("Login", loginButtonText);
     }
 
     @Test
@@ -58,7 +58,8 @@ public class UsersIntegrationTest {
         browser.fillInAddress("Line One st.", "Line 2", "PSCODE");
         browser.clickToSignUpButton();
 
-        assertTrue(browser.pageText().contains(userEmail));
+        String actualMenuText = browser.getLoginOrAccountLinkText();
+        assertEquals(userEmail, actualMenuText);
     }
 
     @Test
@@ -82,6 +83,22 @@ public class UsersIntegrationTest {
 
         Address populatedAddress = browser.getAddress();
         assertEquals(address, populatedAddress);
+    }
+
+    @Test
+    void loginPageShouldExist() throws IOException {
+        browser.goToLoginPage();
+    }
+
+    @Test
+    void userShouldCanLogIn() throws IOException {
+        browser.goToLoginPage();
+        String login = "user@mail.ru";
+        browser.fillInUserCredentials(login, "123455");
+        browser.clickLoginButton();
+        String actualMenuText = browser.getLoginOrAccountLinkText();
+
+        assertEquals(login, actualMenuText);
     }
 
     private Address makeAddress() {
