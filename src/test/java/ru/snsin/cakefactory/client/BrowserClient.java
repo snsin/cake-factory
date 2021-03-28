@@ -89,6 +89,6 @@ public class BrowserClient {
 
     public void clickLoginButton() throws IOException {
         HtmlElement loginButton = currentPage.querySelector("#login-button");
-        loginButton.click();
+        this.currentPage = loginButton.click();
     }
 }

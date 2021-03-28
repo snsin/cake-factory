@@ -1,6 +1,7 @@
 package ru.snsin.cakefactory.controllers;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,12 +35,15 @@ public class BasketController {
     }
 
     @GetMapping
-    ModelAndView basket(@AuthenticationPrincipal String principal){
+    ModelAndView basket(@AuthenticationPrincipal UserDetails principal){
         Map<String, Object> basketModel = new HashMap<>();
         basketModel.put("basketItemsCount", basket.countItems());
         basketModel.put("basket?", true);
         basketModel.put("basketItems", basket.getBasketItems());
-        basketModel.put("address", addressService.findByUserId(principal).orElse(Address.EMPTY_ADDRESS));
+        Address actualAddress = principal != null
+                ? addressService.findByUserId(principal.getUsername()).orElse(Address.EMPTY_ADDRESS)
+                : Address.EMPTY_ADDRESS;
+        basketModel.put("address", actualAddress);
         return new ModelAndView("basket", basketModel);
     }
 
