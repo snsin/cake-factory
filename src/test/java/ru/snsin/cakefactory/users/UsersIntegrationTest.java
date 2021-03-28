@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.snsin.cakefactory.client.BrowserClient;
 
@@ -18,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Sql("/sql/insert-mock-user.sql")
+@Sql(scripts = "/sql/delete-mock-user.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class UsersIntegrationTest {
 
     @Autowired
@@ -98,9 +100,10 @@ public class UsersIntegrationTest {
     }
 
     @Test
-    @WithMockUser("user@mail.ru")
-    void loginTextShouldChangeToUserNameWhenLoggedIn() throws Exception {
-        browser.goToHomePage();
+    void userShouldBeAbleToLoginIfStoredInDb() throws Exception {
+        browser.goToLoginPage();
+        browser.fillInUserCredentials("user@mail.ru", "password");
+        browser.clickLoginButton();
         String actualMenuText = browser.getLoginOrAccountLinkText();
         assertEquals("user@mail.ru", actualMenuText);
     }
