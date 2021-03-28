@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.snsin.cakefactory.client.BrowserClient;
 
@@ -91,10 +92,11 @@ public class UsersIntegrationTest {
     }
 
     @Test
+    @WithMockUser("user@mail.ru")
     void userShouldCanLogIn() throws IOException {
         browser.goToLoginPage();
         String login = "user@mail.ru";
-        browser.fillInUserCredentials(login, "123455");
+        browser.fillInUserCredentials(login, "password");
         browser.clickLoginButton();
         String actualMenuText = browser.getLoginOrAccountLinkText();
 
