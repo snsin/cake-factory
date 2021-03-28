@@ -91,4 +91,12 @@ public class BrowserClient {
         HtmlElement loginButton = currentPage.querySelector("#login-button");
         this.currentPage = loginButton.click();
     }
+
+    public String getEmailInputText() {
+        return getInputValue("#user-email");
+    }
+
+    public String getPasswordInputText() {
+        return getInputValue("#user-password");
+    }
 }

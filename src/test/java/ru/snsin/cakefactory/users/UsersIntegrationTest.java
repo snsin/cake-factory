@@ -13,7 +13,8 @@ import ru.snsin.cakefactory.client.BrowserClient;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -89,18 +90,19 @@ public class UsersIntegrationTest {
     @Test
     void loginPageShouldExist() throws IOException {
         browser.goToLoginPage();
+        Account account = new Account(faker.internet().safeEmailAddress(), faker.internet().password());
+        browser.fillInUserCredentials(account.getEmail(), account.getPassword());
+
+        assertEquals(account.getEmail(), browser.getEmailInputText());
+        assertEquals(account.getPassword(), browser.getPasswordInputText());
     }
 
     @Test
     @WithMockUser("user@mail.ru")
-    void userShouldCanLogIn() throws IOException {
-        browser.goToLoginPage();
-        String login = "user@mail.ru";
-        browser.fillInUserCredentials(login, "password");
-        browser.clickLoginButton();
+    void loginTextShouldChangeToUserNameWhenLoggedIn() throws Exception {
+        browser.goToHomePage();
         String actualMenuText = browser.getLoginOrAccountLinkText();
-
-        assertEquals(login, actualMenuText);
+        assertEquals("user@mail.ru", actualMenuText);
     }
 
     private Address makeAddress() {
