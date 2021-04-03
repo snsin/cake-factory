@@ -1,9 +1,7 @@
 package ru.snsin.cakefactory.client;
 
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlInput;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.web.htmlunit.LocalHostWebClient;
 import org.springframework.core.env.Environment;
@@ -52,6 +50,11 @@ public class BrowserClient {
         final HtmlElement signUpButton = this.currentPage.querySelector("#sign-up");
         this.currentPage = signUpButton.click();
 
+    }
+
+    public void clickToSignUpLink() throws IOException {
+        HtmlAnchor signupLink = this.currentPage.querySelector("#signup-link");
+        this.currentPage = signupLink.click();
     }
 
     public String getCsrfInput() {

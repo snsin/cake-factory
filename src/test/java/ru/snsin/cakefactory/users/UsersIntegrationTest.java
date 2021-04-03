@@ -56,7 +56,8 @@ public class UsersIntegrationTest {
 
     @Test
     void shouldSignUpWhenClickSignupButton() throws IOException {
-        browser.goToSignupPage();
+        browser.goToLoginPage();
+        browser.clickToSignUpLink();
         final String userEmail = "login@example.com";
         browser.fillInUserCredentials(userEmail, "password");
         browser.fillInAddress("Line One st.", "Line 2", "PSCODE");
