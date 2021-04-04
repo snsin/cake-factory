@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.snsin.cakefactory.client.BrowserClient;
@@ -107,6 +108,22 @@ public class UsersIntegrationTest {
         browser.clickLoginButton();
         String actualMenuText = browser.getLoginOrAccountLinkText();
         assertEquals("user@mail.ru", actualMenuText);
+    }
+
+    @Test
+    @WithMockUser(username = "user@example.com")
+    void addressShouldBePopulatedAndBeAbleToChange() throws Exception {
+        browser.goToAccountPage();
+        String loginOrAccountLinkText = browser.getLoginOrAccountLinkText();
+
+        assertEquals("user@example.com", loginOrAccountLinkText);
+
+        Address newAddress = makeAddress();
+        browser.fillInAddress(newAddress.getAddressLine1(), newAddress.getAddressLine2(), newAddress.getPostcode());
+        browser.clickToUpdateButton();
+        browser.goToAccountPage();
+
+        assertEquals(newAddress, browser.getAddress());
     }
 
     private Address makeAddress() {

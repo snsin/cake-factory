@@ -9,7 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/signup")
@@ -24,7 +25,10 @@ public class SignUpController {
 
     @GetMapping
     public ModelAndView signup() {
-        return new ModelAndView("signup", Collections.singletonMap("login?", true));
+        Map<String, Object> pageData = new HashMap<>();
+        pageData.put("address", Address.EMPTY_ADDRESS);
+        pageData.put("login?", true);
+        return new ModelAndView("signup", pageData);
     }
 
     @PostMapping

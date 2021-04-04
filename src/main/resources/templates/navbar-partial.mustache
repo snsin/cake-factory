@@ -28,7 +28,12 @@
           </li>
         {{/login?}}
         <li id="login-or-account">
-          <a class="nav-link" href="/login">{{#email}}{{email}}{{/email}}{{^email}}Login{{/email}}</a>
+          {{#email}}
+            <a class="nav-link" href="/account">{{email}}</a>
+          {{/email}}
+          {{^email}}
+            <a class="nav-link" href="/login">Login</a>
+          {{/email}}
         </li>
       </ul>
     </div>

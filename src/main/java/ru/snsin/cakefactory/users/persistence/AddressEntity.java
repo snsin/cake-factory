@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "address_entity")
@@ -19,9 +20,9 @@ public class AddressEntity {
     private long id;
     @NotBlank
     private String addressLine1;
-    @NotBlank
+    @NotNull
     private String addressLine2;
-    @NotBlank
+    @NotNull
     private String postcode;
     @NotBlank
     private String userId;
