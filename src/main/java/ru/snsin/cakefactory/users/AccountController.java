@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.snsin.cakefactory.components.Basket;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,13 +33,14 @@ public class AccountController {
         Map<String, Object> pageData = new HashMap<>();
         pageData.put("basketItemsCount", basket.countItems());
         pageData.put("address", actualAddress);
+        pageData.put("email", principal.getUsername());
         return new ModelAndView("account", pageData);
     }
 
     @PostMapping("/update")
-    RedirectView updateAddress(@NotNull Address address, @AuthenticationPrincipal UserDetails principal) {
+    RedirectView updateAddress(@Valid Address address, @AuthenticationPrincipal UserDetails principal) {
         addressService.save(address, principal.getUsername());
-        return new RedirectView("/account");
+        return new RedirectView("/");
     }
 
 }

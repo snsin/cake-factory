@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -38,7 +40,15 @@ class AccountControllerTest {
     void testUpdate() throws Exception {
         assertTrue(true);
         mockMvc.perform(post("/account/update").with(csrf()))
-                .andExpect(MockMvcResultMatchers.redirectedUrlPattern("**/account"));
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+
+        MultiValueMap<String, String> addressParams = new LinkedMultiValueMap<>();
+        addressParams.set("addressLine1", "Al1");
+        addressParams.set("addressLine2", "");
+        addressParams.set("postcode", "");
+
+        mockMvc.perform(post("/account/update").params(addressParams).with(csrf()))
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/"));
     }
 
 }

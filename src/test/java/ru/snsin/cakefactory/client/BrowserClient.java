@@ -102,4 +102,13 @@ public class BrowserClient {
     public String getPasswordInputText() {
         return getInputValue("#user-password");
     }
+
+    public void goToAccountPage() throws IOException {
+        this.currentPage = mvcInitClient.getPage("/account");
+    }
+
+    public void clickToUpdateButton() throws IOException {
+        HtmlElement updateButton = currentPage.querySelector("#update-button");
+        this.currentPage = updateButton.click();
+    }
 }

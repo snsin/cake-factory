@@ -3,6 +3,7 @@ package ru.snsin.cakefactory.users;
 import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Value
 public class Address {
@@ -11,8 +12,8 @@ public class Address {
 
     @NotBlank
     String addressLine1;
-    @NotBlank
+    @NotNull
     String addressLine2;
-    @NotBlank
+    @NotNull
     String postcode;
 }
