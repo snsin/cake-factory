@@ -37,7 +37,6 @@ public class BasketController {
     @GetMapping
     ModelAndView basket(@AuthenticationPrincipal UserDetails principal){
         Map<String, Object> basketModel = new HashMap<>();
-        basketModel.put("basketItemsCount", basket.countItems());
         basketModel.put("basket?", true);
         basketModel.put("basketItems", basket.getBasketItems());
         Address actualAddress = principal != null
