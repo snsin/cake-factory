@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.snsin.cakefactory.components.Basket;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -18,11 +17,9 @@ import java.util.Map;
 @RequestMapping("/account")
 public class AccountController {
 
-    private final Basket basket;
     private final AddressService addressService;
 
-    public AccountController(Basket basket, AddressService addressService) {
-        this.basket = basket;
+    public AccountController(AddressService addressService) {
         this.addressService = addressService;
     }
 
@@ -31,7 +28,6 @@ public class AccountController {
         Address actualAddress = addressService.findByUserId(principal.getUsername())
                 .orElse(Address.EMPTY_ADDRESS);
         Map<String, Object> pageData = new HashMap<>();
-        pageData.put("basketItemsCount", basket.countItems());
         pageData.put("address", actualAddress);
         pageData.put("email", principal.getUsername());
         return new ModelAndView("account", pageData);
