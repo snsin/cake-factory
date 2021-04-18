@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
@@ -16,8 +15,8 @@ import org.springframework.util.MultiValueMap;
 import ru.snsin.cakefactory.components.Basket;
 import ru.snsin.cakefactory.domain.BasketItem;
 import ru.snsin.cakefactory.domain.CakeItem;
-import ru.snsin.cakefactory.domain.OrderInfo;
 import ru.snsin.cakefactory.domain.OrderPlacedEvent;
+import ru.snsin.cakefactory.users.Address;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -64,7 +63,7 @@ class OrdersControllerTest {
         MultiValueMap<String, String> form = createOrderInfoForm();
         final List<BasketItem> expectedBasket = Collections.singletonList(
                 new BasketItem(new CakeItem("ts", "Test Cake", BigDecimal.TEN), 1));
-        final OrderInfo expectedAddress = new OrderInfo(line1, line2, code);
+        final Address expectedAddress = new Address(line1, line2, code);
 
         Mockito.when(basket.getBasketItems()).thenReturn(expectedBasket);
         mockMvc.perform(MockMvcRequestBuilders.post("/orders").queryParams(form))
@@ -79,7 +78,7 @@ class OrdersControllerTest {
         MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
         form.add("addressLine1", line1);
         form.add("addressLine2", line2);
-        form.add("postCode", code);
+        form.add("postcode", code);
         return form;
     }
 }

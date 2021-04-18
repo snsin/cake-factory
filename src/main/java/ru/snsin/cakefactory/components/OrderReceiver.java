@@ -12,7 +12,7 @@ public class OrderReceiver {
     @EventListener
     public void onPlacedOrder(OrderPlacedEvent event) {
         log.info("New order placed!");
-        log.info("Delivery address: {}", event.getOrderInfo());
+        log.info("Delivery address: {}", event.getAddress());
         log.info("Order items: {}", event.getBasketItems());
     }
 }
