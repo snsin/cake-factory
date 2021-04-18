@@ -24,6 +24,11 @@ public class SignUpComponent implements SignUp {
     }
 
     @Override
+    public boolean accountExists(String email) {
+        return accountService.exists(email);
+    }
+
+    @Override
     public void signUp(Account account, Address address) {
         accountService.register(account.getEmail(), account.getPassword());
         addressService.save(address, account.getEmail());
