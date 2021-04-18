@@ -3,8 +3,7 @@ package ru.snsin.cakefactory.controllers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.web.servlet.MockMvc;
@@ -12,6 +11,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import ru.snsin.cakefactory.account.AccountService;
 import ru.snsin.cakefactory.components.Basket;
 import ru.snsin.cakefactory.domain.BasketItem;
 import ru.snsin.cakefactory.domain.CakeItem;
@@ -22,11 +22,10 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(controllers = OrdersController.class)
 class OrdersControllerTest {
 
     private MockMvc mockMvc;
@@ -36,6 +35,9 @@ class OrdersControllerTest {
 
     @MockBean
     private ApplicationEventPublisher publisher;
+
+    @MockBean
+    private AccountService accountService;
 
     private String line1;
     private String line2;

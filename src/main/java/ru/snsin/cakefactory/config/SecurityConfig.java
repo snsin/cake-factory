@@ -18,12 +18,6 @@ import static org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.B
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AccountService accountService;
-
-    public SecurityConfig(AccountService accountService) {
-        this.accountService = accountService;
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -42,8 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    @Override
-    public UserDetailsService userDetailsServiceBean() {
+    public UserDetailsService userDetailsServiceBean(AccountService accountService) {
         return (email) -> accountService.findByEmail(email)
                 .map(this::mapAccountToUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
