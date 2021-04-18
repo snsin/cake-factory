@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.snsin.cakefactory.account.Account;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,25 +29,6 @@ class JpaAccountServiceImplTest {
     void setUp() {
         jpaAccountService = new JpaAccountServiceImpl(accountRepository, new BCryptPasswordEncoder());
         faker = new Faker();
-    }
-
-    @Test
-    void shouldFindAllEntities() {
-        AccountEntity user1 = createUser("user1@mail.com");
-        AccountEntity user2 = createUser("user2@mail.com");
-
-        final List<Account> allAccounts = jpaAccountService.findAll();
-
-        assertEquals(2, allAccounts.size());
-        assertTrue(allAccounts.stream().anyMatch(user -> user.getEmail().equals(user1.getEmail())));
-        assertTrue(allAccounts.stream().anyMatch(user -> user.getEmail().equals(user2.getEmail())));
-    }
-
-    @Test
-    void shouldReturnEmptyListWhenRepositoryIsEmpty() {
-        testEntityManager.getEntityManager()
-                .createQuery("DELETE FROM AccountEntity").executeUpdate();
-        assertTrue(jpaAccountService.findAll().isEmpty());
     }
 
     @Test
