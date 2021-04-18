@@ -33,6 +33,9 @@ public class SignUpController {
 
     @PostMapping
     public RedirectView signUpNewUser(@Valid Account account, @Valid Address address) {
+        if (signUp.accountExists(account.getEmail())) {
+            return new RedirectView("/login");
+        }
         signUp.signUp(account, address);
         log.info("New user signed up with email = {}", account.getEmail());
         log.info("and address = {}", address);
