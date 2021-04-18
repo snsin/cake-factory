@@ -1,4 +1,4 @@
-package ru.snsin.cakefactory.users;
+package ru.snsin.cakefactory.account;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import ru.snsin.cakefactory.users.Address;
+import ru.snsin.cakefactory.users.AddressService;
 
 import javax.validation.Valid;
 import java.util.Collections;

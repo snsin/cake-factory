@@ -7,17 +7,14 @@ import org.junit.jupiter.api.function.ThrowingSupplier;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.access.SecurityConfig;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.snsin.cakefactory.domain.BasketItem;
 import ru.snsin.cakefactory.domain.CakeItem;
 import ru.snsin.cakefactory.components.Basket;
 import ru.snsin.cakefactory.services.CakeCatalogService;
-import ru.snsin.cakefactory.users.AccountService;
+import ru.snsin.cakefactory.account.AccountService;
 
 import java.io.IOException;
 import java.math.BigDecimal;

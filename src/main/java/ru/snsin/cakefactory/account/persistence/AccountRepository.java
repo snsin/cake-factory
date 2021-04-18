@@ -1,4 +1,4 @@
-package ru.snsin.cakefactory.users.persistence;
+package ru.snsin.cakefactory.account.persistence;
 
 import org.springframework.data.repository.CrudRepository;
 
