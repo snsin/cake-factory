@@ -1,7 +1,7 @@
 package ru.snsin.cakefactory.domain;
 
 import lombok.Value;
-import ru.snsin.cakefactory.users.Address;
+import ru.snsin.cakefactory.address.Address;
 
 import java.util.List;
 

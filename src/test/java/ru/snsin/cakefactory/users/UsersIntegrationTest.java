@@ -11,6 +11,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.snsin.cakefactory.account.Account;
+import ru.snsin.cakefactory.address.Address;
 import ru.snsin.cakefactory.client.BrowserClient;
 
 import java.io.IOException;
