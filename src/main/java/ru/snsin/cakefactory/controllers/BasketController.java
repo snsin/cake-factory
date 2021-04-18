@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.snsin.cakefactory.components.Basket;
-import ru.snsin.cakefactory.users.Address;
-import ru.snsin.cakefactory.users.AddressService;
+import ru.snsin.cakefactory.address.Address;
+import ru.snsin.cakefactory.address.AddressService;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.*;

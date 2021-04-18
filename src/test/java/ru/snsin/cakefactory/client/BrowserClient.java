@@ -7,7 +7,7 @@ import org.springframework.boot.test.web.htmlunit.LocalHostWebClient;
 import org.springframework.core.env.Environment;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
-import ru.snsin.cakefactory.users.Address;
+import ru.snsin.cakefactory.address.Address;
 
 import java.io.IOException;
 

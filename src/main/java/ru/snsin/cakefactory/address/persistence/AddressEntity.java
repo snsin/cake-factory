@@ -1,4 +1,4 @@
-package ru.snsin.cakefactory.users.persistence;
+package ru.snsin.cakefactory.address.persistence;
 
 import lombok.AccessLevel;
 import lombok.Data;

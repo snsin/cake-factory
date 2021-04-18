@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import ru.snsin.cakefactory.account.Account;
 import ru.snsin.cakefactory.account.AccountService;
+import ru.snsin.cakefactory.address.Address;
+import ru.snsin.cakefactory.address.AddressService;
 
 @Component
 public class SignUpComponent implements SignUp {

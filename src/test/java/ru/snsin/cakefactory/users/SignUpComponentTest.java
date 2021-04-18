@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.snsin.cakefactory.account.Account;
 import ru.snsin.cakefactory.account.AccountService;
+import ru.snsin.cakefactory.address.Address;
+import ru.snsin.cakefactory.address.AddressService;
 
 import static org.junit.jupiter.api.Assertions.*;
 

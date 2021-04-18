@@ -1,8 +1,8 @@
-package ru.snsin.cakefactory.users.persistence;
+package ru.snsin.cakefactory.address.persistence;
 
 import org.springframework.stereotype.Service;
-import ru.snsin.cakefactory.users.Address;
-import ru.snsin.cakefactory.users.AddressService;
+import ru.snsin.cakefactory.address.Address;
+import ru.snsin.cakefactory.address.AddressService;
 
 import java.util.Optional;
 

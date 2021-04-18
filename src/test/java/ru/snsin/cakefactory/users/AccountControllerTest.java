@@ -11,6 +11,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import ru.snsin.cakefactory.account.AccountController;
 import ru.snsin.cakefactory.account.AccountService;
+import ru.snsin.cakefactory.address.AddressService;
 import ru.snsin.cakefactory.components.Basket;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

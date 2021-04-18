@@ -16,7 +16,7 @@ import ru.snsin.cakefactory.components.Basket;
 import ru.snsin.cakefactory.domain.BasketItem;
 import ru.snsin.cakefactory.domain.CakeItem;
 import ru.snsin.cakefactory.domain.OrderPlacedEvent;
-import ru.snsin.cakefactory.users.Address;
+import ru.snsin.cakefactory.address.Address;
 
 import java.math.BigDecimal;
 import java.util.Collections;
