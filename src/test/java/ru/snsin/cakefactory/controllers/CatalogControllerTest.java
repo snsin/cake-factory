@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.snsin.cakefactory.account.AccountService;
 import ru.snsin.cakefactory.domain.CakeItem;
 import ru.snsin.cakefactory.components.Basket;
 import ru.snsin.cakefactory.services.CakeCatalogService;
@@ -43,6 +44,9 @@ class CatalogControllerTest {
 
     @MockBean
     SignUp signUp;
+
+    @MockBean
+    AccountService accountService;
 
     @Test
     void shouldReturnIndex() throws Exception {

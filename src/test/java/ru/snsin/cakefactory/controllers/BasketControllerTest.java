@@ -33,7 +33,7 @@ class BasketControllerTest {
     @Autowired
     WebClient webClient;
 
-    @Autowired
+    @MockBean
     AccountService accountService;
 
     @Autowired

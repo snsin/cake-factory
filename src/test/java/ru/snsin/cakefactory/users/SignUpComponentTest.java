@@ -30,7 +30,7 @@ class SignUpComponentTest {
 
     @BeforeEach
     void setUp() {
-        signUp = new SignUpComponent(accountService, addressService, passwordEncoder);
+        signUp = new SignUpComponent(accountService, addressService);
         faker = new Faker();
     }
 

@@ -2,25 +2,36 @@ package ru.snsin.cakefactory.users;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import ru.snsin.cakefactory.account.AccountController;
+import ru.snsin.cakefactory.account.AccountService;
+import ru.snsin.cakefactory.components.Basket;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(controllers = AccountController.class)
 class AccountControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @MockBean
+    AccountService accountService;
+
+    @MockBean
+    AddressService addressService;
+
+    @MockBean
+    Basket basket;
 
     @Test
     void accountPageShouldNotAvailableForAnonymous() throws Exception {

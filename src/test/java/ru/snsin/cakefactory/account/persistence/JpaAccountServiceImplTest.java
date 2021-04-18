@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.snsin.cakefactory.account.Account;
 
 import java.util.List;
@@ -27,7 +28,7 @@ class JpaAccountServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        jpaAccountService = new JpaAccountServiceImpl(accountRepository);
+        jpaAccountService = new JpaAccountServiceImpl(accountRepository, new BCryptPasswordEncoder());
         faker = new Faker();
     }
 
@@ -52,7 +53,6 @@ class JpaAccountServiceImplTest {
 
     @Test
     void shouldFindUserByEmail() {
-
         AccountEntity existingUser = createUser("existing@example.com");
 
         final Optional<Account> foundByEmail = jpaAccountService.findByEmail(existingUser.getEmail());
@@ -63,23 +63,31 @@ class JpaAccountServiceImplTest {
     }
 
     @Test
-    void shouldSaveUsers() {
-        Account account1 = new Account("user@mail.com", "abc");
-        Account account2 = new Account("user@gmail.com", "123");
+    void shouldRegisterUserAndEncryptPassword() {
+        String email = "user@mail.com";
+        String password = faker.internet().password();
+        jpaAccountService.register(email, password);
 
-        jpaAccountService.save(account1);
-        jpaAccountService.save(account2);
+        AccountEntity registeredUser = testEntityManager.find(AccountEntity.class, email);
 
-        assertEquals(2, jpaAccountService.findAll().size());
+        assertEquals(email, registeredUser.getEmail());
+        assertNotEquals(password, registeredUser.getPassword());
     }
 
     @Test
-    void shouldNotSaveUserIfUserIfEmailAlreadyExists() {
+    void shouldNotRegisterUserIfUserEmailAlreadyExists() {
         AccountEntity user = createUser("user@mail.com");
-        Account accountWithSameEmail = new Account(user.getEmail(), faker.internet().password());
 
-        assertThrows(RuntimeException.class, () -> jpaAccountService.save(accountWithSameEmail));
+        assertThrows(RuntimeException.class, () -> jpaAccountService.register(user.getEmail(), "pass"));
 
+    }
+
+    @Test
+    void shouldChecksForExistence() {
+        AccountEntity existingUser = createUser("existing@example.com");
+
+        assertTrue(jpaAccountService.exists(existingUser.getEmail()));
+        assertFalse(jpaAccountService.exists("lost@email.com"));
     }
 
     private AccountEntity createUser(String email) {
