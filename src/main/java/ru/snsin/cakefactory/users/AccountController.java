@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 
 @Controller
@@ -27,9 +27,7 @@ public class AccountController {
     ModelAndView getAccountPage(@AuthenticationPrincipal UserDetails principal) {
         Address actualAddress = addressService.findByUserId(principal.getUsername())
                 .orElse(Address.EMPTY_ADDRESS);
-        Map<String, Object> pageData = new HashMap<>();
-        pageData.put("address", actualAddress);
-        pageData.put("email", principal.getUsername());
+        Map<String, Object> pageData = Collections.singletonMap("address", actualAddress);
         return new ModelAndView("account", pageData);
     }
 
