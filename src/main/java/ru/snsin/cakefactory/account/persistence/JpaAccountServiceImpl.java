@@ -1,8 +1,8 @@
-package ru.snsin.cakefactory.users.persistence;
+package ru.snsin.cakefactory.account.persistence;
 
 import org.springframework.stereotype.Service;
-import ru.snsin.cakefactory.users.Account;
-import ru.snsin.cakefactory.users.AccountService;
+import ru.snsin.cakefactory.account.Account;
+import ru.snsin.cakefactory.account.AccountService;
 
 import java.util.List;
 import java.util.Objects;

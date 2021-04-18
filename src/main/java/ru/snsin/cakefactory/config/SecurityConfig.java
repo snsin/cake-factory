@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.snsin.cakefactory.users.Account;
-import ru.snsin.cakefactory.users.AccountService;
+import ru.snsin.cakefactory.account.Account;
+import ru.snsin.cakefactory.account.AccountService;
 
 import static org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion.$2Y;
 

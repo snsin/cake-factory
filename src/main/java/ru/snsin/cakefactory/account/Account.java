@@ -1,4 +1,4 @@
-package ru.snsin.cakefactory.users;
+package ru.snsin.cakefactory.account;
 
 import lombok.Value;
 

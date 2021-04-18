@@ -1,4 +1,4 @@
-package ru.snsin.cakefactory.users.persistence;
+package ru.snsin.cakefactory.account.persistence;
 
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import ru.snsin.cakefactory.users.Account;
+import ru.snsin.cakefactory.account.Account;
 
 import java.util.List;
 import java.util.Optional;
