@@ -69,6 +69,18 @@ class SignUpComponentTest {
 
     }
 
+    @Test
+    void shouldCheckIsUserExistsOrNot() {
+        Address address = makeAddress();
+        String email = "exist@example.com";
+        Account account = new Account(email, faker.internet().password());
+
+        signUp.signUp(account, address);
+
+        assertTrue(signUp.accountExists(email));
+        assertFalse(signUp.accountExists("lost@example.com"));
+    }
+
     private Address makeAddress() {
         return new Address(faker.address().streetAddress(),
                 faker.address().secondaryAddress(), faker.address().zipCode());
