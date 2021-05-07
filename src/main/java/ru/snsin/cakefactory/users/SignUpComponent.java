@@ -12,6 +12,8 @@ import ru.snsin.cakefactory.account.AccountService;
 import ru.snsin.cakefactory.address.Address;
 import ru.snsin.cakefactory.address.AddressService;
 
+import javax.transaction.Transactional;
+
 @Component
 public class SignUpComponent implements SignUp {
 
@@ -29,21 +31,9 @@ public class SignUpComponent implements SignUp {
     }
 
     @Override
+    @Transactional
     public void signUp(Account account, Address address) {
         accountService.register(account.getEmail(), account.getPassword());
         addressService.save(address, account.getEmail());
-        setSecurityContext(account);
-    }
-
-    private void setSecurityContext(Account account) {
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
-        UserDetails principal = User.withUsername(account.getEmail())
-                .password("").roles(Account.ROLE_NAME).build();
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities());
-
-        context.setAuthentication(authentication);
-        SecurityContextHolder.setContext(context);
-
     }
 }

@@ -16,8 +16,7 @@ public class UserEmailFilter implements Filter {
                          ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = (authentication instanceof AnonymousAuthenticationToken)
-                ? null : ((UserDetails) authentication.getPrincipal()).getUsername();
+        String email = (authentication instanceof AnonymousAuthenticationToken) ? null : authentication.getName();
         request.setAttribute("email", email);
         chain.doFilter(request, response);
     }
