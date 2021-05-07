@@ -82,9 +82,7 @@ public class LoginWithFacebookTest {
 
         assertNotNull(mvcResult.getModelAndView());
         Map<String, Object> model = mvcResult.getModelAndView().getModel();
-        assertEquals(expectedAddress.getAddressLine1(), model.get("addressLine1"));
-        assertEquals(expectedAddress.getAddressLine2(), model.get("addressLine2"));
-        assertEquals(expectedAddress.getPostcode(), model.get("postcode"));
+        assertEquals(expectedAddress, model.get("address"));
     }
 
     private OAuth2AuthenticationToken createToken(String email) {
