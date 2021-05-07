@@ -18,8 +18,7 @@ import ru.snsin.cakefactory.client.BrowserClient;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -130,6 +129,13 @@ public class UsersIntegrationTest {
         browser.goToAccountPage();
 
         assertEquals(newAddress, browser.getAddress());
+    }
+
+    @Test
+    void loginWithFacebookLinkShouldExist() throws IOException {
+        browser.goToLoginPage();
+        final String fbLoginLink = browser.getFbLoginLinkHref();
+        assertTrue(fbLoginLink.contains("facebook"));
     }
 
     private Address makeAddress() {

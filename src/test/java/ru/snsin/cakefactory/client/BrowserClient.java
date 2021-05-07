@@ -111,4 +111,9 @@ public class BrowserClient {
         HtmlElement updateButton = currentPage.querySelector("#update-button");
         this.currentPage = updateButton.click();
     }
+
+    public String getFbLoginLinkHref() {
+        HtmlAnchor fbLoginLink = currentPage.querySelector("#fb-login");
+        return fbLoginLink.getHrefAttribute();
+    }
 }
