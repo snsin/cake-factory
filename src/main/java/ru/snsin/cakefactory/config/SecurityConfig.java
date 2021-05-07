@@ -24,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests((authorize) -> authorize
                         .antMatchers("/account/**").authenticated()
                         .anyRequest().permitAll())
+                .oauth2Login(oauth2 -> oauth2.loginPage("/login"))
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .usernameParameter("email")

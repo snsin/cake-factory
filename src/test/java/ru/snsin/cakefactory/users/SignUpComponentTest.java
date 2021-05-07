@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import ru.snsin.cakefactory.account.Account;
 import ru.snsin.cakefactory.account.AccountService;
 import ru.snsin.cakefactory.address.Address;
@@ -29,6 +31,9 @@ class SignUpComponentTest {
 
     private SignUp signUp;
     private Faker faker;
+
+    @MockBean
+    ClientRegistrationRepository clientRegistrationRepository;
 
     @BeforeEach
     void setUp() {

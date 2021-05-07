@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -38,6 +39,9 @@ class OrdersControllerTest {
 
     @MockBean
     private AccountService accountService;
+
+    @MockBean
+    ClientRegistrationRepository clientRegistrationRepository;
 
     private String line1;
     private String line2;
