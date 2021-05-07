@@ -14,3 +14,6 @@ spring:
           facebook:
             client-id: "${fb.id}"
             client-secret: "${fb.secret}"
+        provider:
+          facebook:
+            user-name-attribute: email
