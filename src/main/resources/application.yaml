@@ -7,3 +7,10 @@ spring:
     open-in-view: false
   mustache:
     expose-request-attributes: true
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: "${fb.id}"
+            client-secret: "${fb.secret}"
