@@ -12,6 +12,7 @@ import ru.snsin.cakefactory.address.Address;
 import ru.snsin.cakefactory.address.AddressService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Collections;
 import java.util.Map;
 
@@ -26,8 +27,8 @@ public class AccountController {
     }
 
     @GetMapping
-    ModelAndView getAccountPage(@AuthenticationPrincipal UserDetails principal) {
-        Address actualAddress = addressService.findByUserId(principal.getUsername())
+    ModelAndView getAccountPage(Principal principal) {
+        Address actualAddress = addressService.findByUserId(principal.getName())
                 .orElse(Address.EMPTY_ADDRESS);
         Map<String, Object> pageData = Collections.singletonMap("address", actualAddress);
         return new ModelAndView("account", pageData);
