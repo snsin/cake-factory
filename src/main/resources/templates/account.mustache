@@ -12,11 +12,15 @@
 <div class="container">
 
   <div class="container">
+    <div class="row justify-content-between">
+      <h4>Account</h4>
+      <form method="post" action="/logout">
+        <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
+        <button type="submit" class="btn btn-warning">Logout</button>
+      </form>
+    </div>
     <form name="account-data" action="/account/update" method="post">
-      <div class="row">
-        <h4>Account</h4>
-      </div>
-      {{> address-inputs}}
+    {{> address-inputs}}
       <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}" />
       <button id="update-button" class="btn btn-primary" type="submit">Update</button>
     </form>
