@@ -1,4 +1,4 @@
-package ru.snsin.cakefactory.order;
+package ru.snsin.cakefactory.payment;
 
 import com.paypal.core.PayPalEnvironment;
 import lombok.AllArgsConstructor;

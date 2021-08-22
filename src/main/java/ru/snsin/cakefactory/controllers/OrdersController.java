@@ -10,7 +10,9 @@ import ru.snsin.cakefactory.components.Basket;
 import ru.snsin.cakefactory.domain.OrderPlacedEvent;
 import ru.snsin.cakefactory.address.Address;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.net.URI;
 
 @Slf4j
 @Controller
@@ -26,7 +28,7 @@ public class OrdersController {
     }
 
     @PostMapping
-    RedirectView placeOrder(@Valid Address address) {
+    RedirectView placeOrder(@Valid Address address, HttpServletRequest request) {
         OrderPlacedEvent placedOrder = new OrderPlacedEvent(address, this.basket.getBasketItems());
         eventPublisher.publishEvent(placedOrder);
         basket.clearBasket();
